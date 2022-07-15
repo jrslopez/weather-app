@@ -23,11 +23,17 @@ request({ url: url, json: true }, (error, response) => {
 // Geocoding
 // Address -> Lat/Long -> Weather
 
-// const urlGeo =
-//   "https://api.mapbox.com/geocoding/v5/mapbox.places/Los%20Angeles.json?access_token=pk.eyJ1IjoianJzbG9wZXoiLCJhIjoiY2w1bHpyNWlxMHBnaDNpcm8wYXU2dWRvcCJ9.r_FfjeCTHITkz6-E9x6yoQ&limit=1"
+const urlGeo =
+  "https://api.mapbox.com/geocoding/v5/mapbox.places/Los%20Angeles.json?access_token=pk.eyJ1IjoianJzbG9wZXoiLCJhIjoiY2w1bHpyNWlxMHBnaDNpcm8wYXU2dWRvcCJ9.r_FfjeCTHITkz6-E9x6yoQ&limit=1"
 
-// request({ url: urlGeo, json: true }, (error, response) => {
-//   latitude = response.body.features[0].center[1]
-//   longitude = response.body.features[0].center[0]
-//   console.log(latitude + ", " + longitude)
-// })
+request({ url: urlGeo, json: true }, (error, response) => {
+  if (error) {
+    console.log("Unable to connect to locations service!")
+  } else if (response.body.features.length === 0) {
+    console.log("Invalid search!")
+  } else {
+    latitude = response.body.features[0].center[1]
+    longitude = response.body.features[0].center[0]
+    console.log(latitude + ", " + longitude)
+  }
+})
