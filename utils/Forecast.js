@@ -8,19 +8,19 @@ const forecast = (latitude, longitude, callback) => {
     encodeURIComponent(longitude) +
     "&units=f"
 
-  request({ url: url, json: true }, (error, data) => {
+  request({ url: url, json: true }, (error, { body } = {}) => {
     if (error) {
       callback("Unable to connect to weather services!")
-    } else if (data.body.error) {
+    } else if (body.error) {
       callback("Unable to find location!")
     } else {
       callback(
         undefined,
-        data.body.current.weather_descriptions[0] +
+        body.current.weather_descriptions[0] +
           ". It is currently " +
-          data.body.current.temperature +
+          body.current.temperature +
           " degrees out. It feels like " +
-          data.body.current.feelslike +
+          body.current.feelslike +
           " degrees out."
       )
     }
